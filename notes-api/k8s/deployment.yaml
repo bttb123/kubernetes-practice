@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-deployment
+#  labels:
+#    app: 
+spec:
+  replicas: 5 # number of running replicas
+  template: # configure the pod
+    metadata:
+#      name: 
+      labels:
+        app: api
+    spec:
+      containers:
+        - name: api
+          image: fhsinchy/notes-api
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 3000 # from docker-compose
+          
+          # environment same docker-compose
+          env:
+            - name: DB_CONNECTION
+              value: pg
+      restartPolicy: Always
+  selector: # select which pod to control
+    matchLabels:
+      app: api # Deployment will control the pods the have a label of app: api

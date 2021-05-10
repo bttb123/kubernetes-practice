@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgrest-deployment
+#  labels:
+#    app: postgrest-deployment
+spec:
+  replicas: 1
+  template: # pod
+    metadata:
+      #      name: postgrest-deployment
+      labels:
+        app: postgres
+    spec:
+      containers:
+        - name: postgres
+          image: fhsinchy/notes-postgres
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_PASSWORD
+              value: 63eaQB9wtLqmNBpg
+            - name: POSTGRES_DB
+              value: notesdb
+      restartPolicy: Always
+  selector: # pod to control
+    matchLabels:
+      app: postgres

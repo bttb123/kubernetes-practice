@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello-kube-load-balancer
+spec:
+  selector:
+    app: web # from label cua 1 object
+  ports:
+    - port: 80 # inner port
+      targetPort: 80 # outer port
+  type: LoadBalancer
